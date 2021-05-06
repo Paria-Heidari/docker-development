@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /   #new 
+  name: myfav-app
+  namespace: myfav-app
+spec:
+  tls:
+  - hosts:
+    - pari.test
+    secretName: paria-tls-secret
+  rules:
+  - host: paria.test
+    http:
+      paths:
+      - path: /v1/hello
+        backend:
+          serviceName: example-service
+          servicePort: 80
+      - path: /v2/hello
+        backend:
+          serviceName: example-service
+          servicePort: 80
